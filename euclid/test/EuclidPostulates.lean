@@ -1,3 +1,8 @@
+/-
+Project: Euclidean Geometry.
+Contributors: Adarsh, Anurag, Nikhesh, Sai Niranjan.
+-/
+
 import Lake
 import Init
 import Mathlib.Data.Real.Basic
