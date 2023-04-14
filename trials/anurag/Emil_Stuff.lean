@@ -62,7 +62,7 @@ structure EmilGeometry where
 
 variable {geom : EmilGeometry}
 
-
+open EmilGeometry
 
 #check geom.axiom3
 #check Exists
@@ -81,16 +81,22 @@ variable {geom : EmilGeometry}
 --   ∀ p1 p2 : geom.Point, geom.is_parallel (geom.line_two_points p1 p2) (geom.line_two_points (f p1 ) (f p2)) 
 
 
---Defining Dilatation
-def EmilGeometry.Dilatation := 
-  {f : geom.Point → geom.Point // 
-    ∀ p1 p2 : geom.Point, (h12 : ¬ p1 = p2) → 
-    (geom.lies_on (f p2) (geom.para_line_playfair (f p2) (geom.line_of p1 p2 h12)))
-    }
+--Defining Dilatation as a Subtype
+
+structure EmilGeometry.Dilatation := 
+  func : geom.Point → geom.Point
+  prop : ∀ p1 p2 : geom.Point, (h12 : ¬ p1 = p2) → 
+    (geom.lies_on (func p2) (geom.para_line_playfair (func p2) (geom.line_of p1 p2 h12)))
 
 #print EmilGeometry.Dilatation
 
-
+@[ext] theorem EmilGeometry.Dilatation.ext (d1 d2 : geom.Dilatation) : d1.func = d2.func → d1 = d2 := by
+  intro hyp
+  cases d1
+  cases d2
+  simp
+  subst hyp -- substitute
+  rfl
 
 -- theorem EmilGeometry.closure_dil : (d1 d2 : geom.Dilatation) → ∃ d : geom.Dilatation, d.val = (fun p => d1.val (d2.val p)) := by
 --   intro d1 d2
@@ -103,18 +109,27 @@ def EmilGeometry.Dilatation :=
 
 
 
-def EmilGeometry.comp_dil (d1 d2 : geom.Dilatation) : geom.Dilatation :=
-  ⟨fun p => d1.val (d2.val p), (by simp [axiom1,playfair])⟩
+abbrev EmilGeometry.comp_dil (d1 d2 : geom.Dilatation) : geom.Dilatation :=
+  ⟨fun p => d1.func (d2.func p), (by simp [axiom1,playfair])⟩
 
 --infix:64 "⋆" => EmilGeometry.comp_dil
 
 #check EmilGeometry.Dilatation
 
 instance : Group (geom.Dilatation) where
-  mul := fun d1 d2 => geom.comp_dil d1 d2
+  mul := geom.comp_dil
+  one := sorry
+  one_mul := sorry
+  mul_one := sorry
+  inv := sorry
+  mul_left_inv := sorry
   mul_assoc := by
-    simp [EmilGeometry]
-    
+    intro a b c
+    ext x
+    show (comp_dil (comp_dil a b) c).func x =  Dilatation.func (comp_dil a (comp_dil b c)) x
+    simp [comp_dil]
+
+
 
 
 
@@ -128,6 +143,7 @@ instance : Group (geom.Dilatation) where
 --   func : geom.Point → geom.Point
 --   prop : (a b : geom.Point) → (hab : ¬ a = b) → 
 --     geom.lies_on (func b) (geom.line_parallel_line (func a) (geom.line_two_points a b hab))
+
 
 
 
