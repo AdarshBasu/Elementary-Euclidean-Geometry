@@ -12,6 +12,10 @@ set_option autoImplicit false
 
 -- Geometry from Chapter 2 of Emil Artin
 
+/-TODo:
+ - for commutative group, use AddCommGroup-/
+
+
 structure EmilGeometry where
   Point : Type
   Line : Type
@@ -64,6 +68,9 @@ variable {geom : EmilGeometry}
 
 open EmilGeometry
 
+def EmilGeometry.lineOf {geom : EmilGeometry}(p q: geom.Point)(h : ¬p = q) :=
+  geom.line_of p q h
+
 #check geom.axiom3
 #check Exists
 #check Vector
@@ -74,6 +81,12 @@ open EmilGeometry
 -- infix:64 "|!" => EmilGeometry.line_parallel_line
 -- infix:100 "+!" => EmilGeometry.line_two_points
 -- try "notation" and "macro"
+
+macro  a:term "+!" b:term ":::" c:term : term => do
+  `(EmilGeometry.lineOf $a:term $b:term $c:term)
+
+
+
 
 
 
@@ -86,7 +99,7 @@ open EmilGeometry
 structure EmilGeometry.Dilatation := 
   func : geom.Point → geom.Point
   prop : ∀ p1 p2 : geom.Point, (h12 : ¬ p1 = p2) → 
-    (geom.lies_on (func p2) (geom.para_line_playfair (func p2) (geom.line_of p1 p2 h12)))
+    (geom.lies_on (func p2) (geom.para_line_playfair (func p2) (p1 +! p2 ::: h12)))
 
 #print EmilGeometry.Dilatation
 
