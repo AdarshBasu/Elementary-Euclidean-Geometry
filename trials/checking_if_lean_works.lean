@@ -121,7 +121,7 @@ def vec : Vector ℕ 3 := ⟨[1,5,3],rfl⟩
 def p : Prop := (1 = 1) ∧ (2 = 2)
 #check p
 theorem A (h : p): 1 = 1 := by
-  let ⟨ha, hb⟩ := h
+  let ⟨ha, _⟩ := h
   apply ha
 
 -- Mapping a `Vec` to a `Vector` and back gives the original `Vec` -/
