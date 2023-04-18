@@ -1080,12 +1080,6 @@ abbrev EmilGeomAxioms.nt_Dilatation_comp (d1 d2 : ega.nt_Dilatation) : ega.nt_Di
 
 
 
-structure EmilGeomAxioms.inv_dil where
-  --inverse function
-  inverse : ega.nt_Dilatation → ega.nt_Dilatation
-  --inverse property
-  prop : ∀ d : ega.nt_Dilatation, ega.nt_Dilatation_comp (inverse d) d = ega.id_dil ∧ ega.nt_Dilatation_comp d (inverse d) = ega.id_dil
-  
 
 
 instance : Group (ega.nt_Dilatation) where
@@ -1108,11 +1102,12 @@ instance : Group (ega.nt_Dilatation) where
     show (nt_Dilatation_comp a id_dil).func x = a.func x
     simp [id_dil]
   
-  inv := inv_dil.inverse
+  inv := sorry
 
   mul_left_inv := by 
     intro a 
     ext x
+    sorry
 
     
   --a*b*c = a*(b*c)
