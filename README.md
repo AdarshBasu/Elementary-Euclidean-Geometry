@@ -11,3 +11,12 @@ We are going to proceed in the same order as it is usually presented in the high
 
 
 UPDATE: Final Submission for PnP2023 project.
+
+Follow-up:
+1. Define Inverse of non-trivial dilatations. Also, there are too many structures. Having difficulty understanding.
+2. Clean-up definitions of length of line segments, measure of angles
+3. When you put two lines of the same length on top of each other, do the endpoints coincide for different lp-norms?
+Does the field have to be reals or can we just work with lines and circles having rational points on them? 
+Meaning: every line of length l, is a copy of l \cap \Q. Same for circles of radius r.
+Thereby, discuss about defining this translation and rotation.
+4. Would the definition in point 3. help with the "Proof with Diagrams" in Lean?
