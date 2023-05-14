@@ -19,6 +19,6 @@ Follow-up:
 Does the field have to be reals or can we just work with lines and circles having rational points on them? 
 Meaning: every line of length l, is a copy of $$l \cap \mathbb{Q}$$. Same for circles of radius r.
 Thereby, discuss about defining this translation and rotation. Coincidicence for lp-norms can be proved for p > 1 using norm equivalence.
-Mathematically $$l \cap \mathbb{Q}$$ allows us flexibility with a cauchy sequence like extention (as R is just closure of Q with the Lp metric p > 1) however need to check if Lean's analysis tools allow for something like that.
+Mathematically $$l \cap \mathbb{Q}$$ allows us flexibility with a cauchy sequence like extension (as R is just closure of Q with the Lp metric p > 1) however need to check if Lean's analysis tools allow for something like that.
 
 4. Would the definition in point 3. help with the "Proof with Diagrams" in Lean?
