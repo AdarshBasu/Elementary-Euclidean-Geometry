@@ -986,10 +986,21 @@ theorem EmilGeomAxioms.nt_Dilatation_onto (d : ega.nt_Dilatation) : (∀ r : ega
         by_contra contra2
         contradiction
 
-       
+#check Classical.choice
+#check Nonempty.intro
 
+noncomputable def dilInvFunc (d : ega.nt_Dilatation)(r :ega.Point) : 
+  {r₀ : ega.Point | d.func r₀ = r} := by
+    apply Classical.choice 
+    let ⟨r₀, hr₀⟩ := ega.nt_Dilatation_onto d r
+    exact ⟨r₀, hr₀⟩
 
-
+noncomputable def dilInv (d : ega.nt_Dilatation) : ega.nt_Dilatation :=
+  {
+    func := fun r ↦ (dilInvFunc d r).val,
+    prop := sorry
+    nt_prop := sorry
+  }
 
 
 /--The identity dilatation-/
@@ -1080,9 +1091,7 @@ abbrev EmilGeomAxioms.nt_Dilatation_comp (d1 d2 : ega.nt_Dilatation) : ega.nt_Di
 
 
 
-
-
-instance : Group (ega.nt_Dilatation) where
+noncomputable instance : Group (ega.nt_Dilatation) where
   -- a * b
   mul := ega.nt_Dilatation_comp
   
@@ -1102,7 +1111,7 @@ instance : Group (ega.nt_Dilatation) where
     show (nt_Dilatation_comp a id_dil).func x = a.func x
     simp [id_dil]
   
-  inv := sorry
+  inv := dilInv
 
   mul_left_inv := by 
     intro a 
